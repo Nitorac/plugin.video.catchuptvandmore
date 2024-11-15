@@ -179,6 +179,7 @@ def get_stream_with_quality(plugin,
                             video_url,
                             manifest_type="hls",
                             headers=None,
+                            custom_license_headers=None,
                             license_url=None,
                             map_audio=False,
                             append_query_string=False,
@@ -193,7 +194,8 @@ def get_stream_with_quality(plugin,
     :param plugin:                      plugin
     :param str video_url:               The url to download
     :param str manifest_type:           Manifest type
-    :param dict headers:                the headers
+    :param dict headers:                the headers, always used for stream, and license only if custom_license_headers is not set
+    :param dict custom_license_headers: the license headers, used only for the license, leaving 'headers' only for the stream part
     :param str license_url:        licence url
     :param bool append_query_string:    Should the existing query string be appended?
     :param bool map_audio:              Map audio streams
@@ -264,7 +266,7 @@ def get_stream_with_quality(plugin,
     if license_url is not None:
 
         if '|' not in license_url:  # add headers only if they are not already in the url
-            license_url = '%s|%s|R{SSM}|' % (license_url, stream_headers)
+            license_url = '%s|%s|R{SSM}|' % (license_url, urlencode(custom_license_headers) if custom_license_headers else stream_headers) # use custom_license_headers only if it is set, else fallback to stream_headers
         item.property['inputstream.adaptive.license_key'] = license_url
 
     if input_stream_properties is not None:
