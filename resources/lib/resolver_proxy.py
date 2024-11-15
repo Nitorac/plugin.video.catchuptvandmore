@@ -266,7 +266,11 @@ def get_stream_with_quality(plugin,
     if license_url is not None:
 
         if '|' not in license_url:  # add headers only if they are not already in the url
-            license_url = '%s|%s|R{SSM}|' % (license_url, urlencode(custom_license_headers) if custom_license_headers else stream_headers) # use custom_license_headers only if it is set, else fallback to stream_headers
+            if custom_license_headers: # use custom_license_headers only if it is set, else fallback to stream_headers
+                license_headers = urlencode(custom_license_headers)
+            else:
+                license_headers = stream_headers
+            license_url = '%s|%s|R{SSM}|' % (license_url, license_headers)
         item.property['inputstream.adaptive.license_key'] = license_url
 
     if input_stream_properties is not None:
