@@ -435,4 +435,5 @@ def get_live_url(plugin, item_id, **kwargs):
 
     return resolver_proxy.get_stream_with_quality(plugin, video_url=video_url,
                                                   manifest_type="mpd", license_url=license_url,
-                                                  workaround=workaround, headers=license_headers)
+                                                  workaround=workaround, headers=headers_video_stream, 
+                                                  custom_license_headers=license_headers)
