@@ -266,7 +266,7 @@ def get_stream_with_quality(plugin,
     if license_url is not None:
 
         if '|' not in license_url:  # add headers only if they are not already in the url
-            if custom_license_headers: # use custom_license_headers only if it is set, else fallback to stream_headers
+            if custom_license_headers:  # use custom_license_headers only if it is set, else fallback to stream_headers
                 license_headers = urlencode(custom_license_headers)
             else:
                 license_headers = stream_headers
